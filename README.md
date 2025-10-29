@@ -81,3 +81,62 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useState } from "react";
+
+function App() {
+  const [query, setQuery] = useState("");
+  const [recipes, setRecipes] = useState([]);
+
+  const searchRecipes = () => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
+      .then((res) => res.json())
+      .then((data) => setRecipes(data.meals || []));
+  };
+
+  return (
+    <div>
+      <h2>React Recipe Finder</h2>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Enter recipe"
+      />
+      <button onClick={searchRecipes}>Search</button>
+
+      {recipes.map((r) => (
+        <div key={r.idMeal}>
+          <p>{r.strMeal}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+
